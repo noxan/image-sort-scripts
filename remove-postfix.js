@@ -19,7 +19,8 @@ const main = async basePath => {
       } else if (!ignoreFiles.includes(file)) {
         const match = file.match(matchRegex);
         if (match) {
-          console.log(file, '->', [match[1], match[2]].join('.'));
+          const newFile = [match[1], match[2]].join('.');
+          console.log(file, '->', newFile);
         }
       }
     }),
