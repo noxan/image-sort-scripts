@@ -28,7 +28,9 @@ const main = async basePath => {
 
         const date = exifTags.CreateDate || exifTags.FileModifyDate;
 
-        console.log(filePath, formatDate(date));
+        const targetPath = path.join(startPath, formatDate(date), file);
+
+        console.log(filePath, targetPath);
       }
     }),
   );
