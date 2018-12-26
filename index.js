@@ -3,6 +3,7 @@ const path = require('path');
 const exiftool = require('exiftool-vendored').exiftool;
 
 const startPath = '/Volumes/Intenso External USB 3.0 Media/Photos';
+const ignoreFiles = ['.DS_Store'];
 
 const main = async basePath => {
   const files = await fs.readdir(basePath);
@@ -14,7 +15,7 @@ const main = async basePath => {
       const stats = await fs.lstat(filePath);
       if (stats.isDirectory()) {
         await main(filePath);
-      } else {
+      } else if (!ignoreFiles.includes(file)) {
         const exifTags = await exiftool.read(filePath);
         console.log(filePath, exifTags.CreateDate);
       }
