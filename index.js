@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const exiftool = require('exiftool-vendored').exiftool;
 
@@ -8,12 +8,12 @@ exiftool
   .version()
   .then(version => console.log(`We're running ExifTool v${version}`));
 
-const main = basePath => {
-  const directories = fs.readdirSync(basePath);
+const main = async basePath => {
+  const directories = await fs.readdir(basePath);
 
-  directories.forEach(directory => {
+  directories.forEach(async directory => {
     const directoryPath = path.join(basePath, directory);
-    const stats = fs.lstatSync(directoryPath);
+    const stats = await fs.lstat(directoryPath);
     if (stats.isDirectory) {
       main(directoryPath);
     }
