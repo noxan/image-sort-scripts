@@ -1,0 +1,7 @@
+{
+  "name": "imagesort",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Richard <richard@stromer.org>",
+  "license": "MIT"
+}
