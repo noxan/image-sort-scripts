@@ -22,11 +22,13 @@ const main = async basePath => {
           const newFile = [match[1], match[2]].join('.');
           const newPath = path.join(basePath, newFile);
 
-          const alreadyExists = await fs.access(newPath);
-          if (alreadyExists) {
-            console.error('New file already exists, duplicate?');
+          const newStats = await fs.stat(newPath);
+          const equalFile =
+            stats.size === newStats.size && stats.mtimeMs === newStats.mtimeMs;
+          if (newStats && !equalFile) {
+            console.error('DIFF', filePath, '->', newPath);
           } else {
-            console.log(file, '->', newFile);
+            console.log(filePath, '->', newPath);
           }
         }
       }
