@@ -14,11 +14,12 @@ const main = async basePath => {
   files.forEach(async file => {
     const filePath = path.join(basePath, file);
 
-    console.log(filePath);
-
     const stats = await fs.lstat(filePath);
     if (stats.isDirectory()) {
       main(filePath);
+    } else {
+      const exifTags = await exiftool.read(filePath);
+      console.log(filePath, exifTags);
     }
   });
 };
