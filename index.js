@@ -14,7 +14,7 @@ const main = async basePath => {
   directories.forEach(async directory => {
     const directoryPath = path.join(basePath, directory);
     const stats = await fs.lstat(directoryPath);
-    if (stats.isDirectory) {
+    if (stats.isDirectory()) {
       main(directoryPath);
     }
   });
