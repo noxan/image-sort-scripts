@@ -9,17 +9,18 @@ exiftool
   .then(version => console.log(`We're running ExifTool v${version}`));
 
 const main = async basePath => {
-  const directories = await fs.readdir(basePath);
+  const files = await fs.readdir(basePath);
 
-  directories.forEach(async directory => {
-    const directoryPath = path.join(basePath, directory);
-    const stats = await fs.lstat(directoryPath);
+  files.forEach(async file => {
+    const filePath = path.join(basePath, file);
+
+    console.log(filePath);
+
+    const stats = await fs.lstat(filePath);
     if (stats.isDirectory()) {
-      main(directoryPath);
+      main(filePath);
     }
   });
-
-  console.log(directories);
 };
 
 main(startPath);
