@@ -5,6 +5,14 @@ const exiftool = require('exiftool-vendored').exiftool;
 const startPath = '/Volumes/Intenso External USB 3.0 Media/Photos';
 const ignoreFiles = ['.DS_Store'];
 
+const formatDate = date => {
+  const year = String(date.year).padStart(4, '0');
+  const month = String(date.month).padStart(2, '0');
+  const day = String(date.day).padStart(2, '0');
+
+  return year + '/' + month + '-' + day;
+};
+
 const main = async basePath => {
   const files = await fs.readdir(basePath);
 
@@ -17,7 +25,10 @@ const main = async basePath => {
         await main(filePath);
       } else if (!ignoreFiles.includes(file)) {
         const exifTags = await exiftool.read(filePath);
-        console.log(filePath, exifTags.CreateDate);
+
+        const date = exifTags.CreateDate || exifTags.FileModifyDate;
+
+        console.log(filePath, formatDate(date));
       }
     }),
   );
