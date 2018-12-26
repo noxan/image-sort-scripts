@@ -22,13 +22,19 @@ const main = async basePath => {
           const newFile = [match[1], match[2]].join('.');
           const newPath = path.join(basePath, newFile);
 
-          const newStats = await fs.stat(newPath);
-          const equalFile =
-            stats.size === newStats.size && stats.mtimeMs === newStats.mtimeMs;
-          if (newStats && !equalFile) {
+          let newStats;
+          try {
+            newStats = await fs.stat(newPath);
+          } catch (err) {}
+          if (
+            newStats &&
+            stats.size === newStats.size &&
+            stats.mtimeMs === newStats.mtimeMs
+          ) {
             console.error('DIFF', filePath, '->', newPath);
           } else {
             console.log(filePath, '->', newPath);
+            await fs.rename(filePath, newPath);
           }
         }
       }
