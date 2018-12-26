@@ -20,7 +20,14 @@ const main = async basePath => {
         const match = file.match(matchRegex);
         if (match) {
           const newFile = [match[1], match[2]].join('.');
-          console.log(file, '->', newFile);
+          const newPath = path.join(basePath, newFile);
+
+          const alreadyExists = await fs.access(newPath);
+          if (alreadyExists) {
+            console.error('New file already exists, duplicate?');
+          } else {
+            console.log(file, '->', newFile);
+          }
         }
       }
     }),
