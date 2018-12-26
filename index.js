@@ -3,6 +3,7 @@ const path = require('path');
 const exiftool = require('exiftool-vendored').exiftool;
 
 const startPath = '/Volumes/Intenso External USB 3.0 Media/Photos';
+const targetPath = '/Volumes/Intenso External USB 3.0 Media/Photos 3';
 const ignoreFiles = ['.DS_Store'];
 
 const formatDate = date => {
@@ -28,9 +29,13 @@ const main = async basePath => {
 
         const date = exifTags.CreateDate || exifTags.FileModifyDate;
 
-        const targetPath = path.join(startPath, formatDate(date), file);
+        const newDirectory = path.join(targetPath, formatDate(date));
+        await fs.mkdir(newDirectory, { recursive: true });
 
-        console.log(filePath, targetPath);
+        const newPath = path.join(newDirectory, file);
+
+        console.log(filePath, newPath);
+        await fs.rename(filePath, newPath);
       }
     }),
   );
