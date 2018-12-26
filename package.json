@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Richard <richard@stromer.org>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "exiftool-vendored": "^7.5.0"
+  }
 }
