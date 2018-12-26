@@ -4,10 +4,6 @@ const exiftool = require('exiftool-vendored').exiftool;
 
 const startPath = '/Volumes/Intenso External USB 3.0 Media/Photos';
 
-exiftool
-  .version()
-  .then(version => console.log(`We're running ExifTool v${version}`));
-
 const main = async basePath => {
   const files = await fs.readdir(basePath);
 
