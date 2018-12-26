@@ -4,6 +4,8 @@ const path = require('path');
 const startPath = '/Volumes/Intenso External USB 3.0 Media/Photos';
 const ignoreFiles = ['.DS_Store', '.sync.ffs_db', 'sync.ffs_lock'];
 
+const matchRegex = /^(.*)-[0-9]\.(.*)$/;
+
 const main = async basePath => {
   const files = await fs.readdir(basePath);
 
@@ -15,7 +17,10 @@ const main = async basePath => {
       if (stats.isDirectory()) {
         await main(filePath);
       } else if (!ignoreFiles.includes(file)) {
-        console.log(file);
+        const match = file.match(matchRegex);
+        if (match) {
+          console.log(file, '->', [match[1], match[2]].join('.'));
+        }
       }
     }),
   );
