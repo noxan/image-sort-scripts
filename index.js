@@ -26,4 +26,5 @@ const main = async basePath => {
 (async () => {
   await main(startPath);
   console.log('Done');
+  exiftool.end();
 })();
